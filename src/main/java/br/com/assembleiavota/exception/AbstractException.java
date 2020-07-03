@@ -1,4 +1,4 @@
-package br.com.cooperativism.exception;
+package br.com.assembleiavota.exception;
 
 import org.springframework.http.HttpStatus;
 

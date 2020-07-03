@@ -1,6 +1,7 @@
-package br.com.cooperativism.exception;
+package br.com.assembleiavota.exception;
 
-import br.com.cooperativism.exception.error.ApiError;
+
+import br.com.assembleiavota.exception.error.ApiError;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpStatusCodeException;
 

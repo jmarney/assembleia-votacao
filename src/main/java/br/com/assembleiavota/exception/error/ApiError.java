@@ -1,4 +1,4 @@
-package br.com.cooperativism.exception.error;
+package br.com.assembleiavota.exception.error;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

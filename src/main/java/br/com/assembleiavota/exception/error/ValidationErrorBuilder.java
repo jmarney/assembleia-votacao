@@ -1,4 +1,4 @@
-package br.com.cooperativism.exception.error;
+package br.com.assembleiavota.exception.error;
 
 import com.google.common.base.Strings;
 import org.springframework.validation.Errors;

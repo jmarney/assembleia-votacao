@@ -1,4 +1,4 @@
-package br.com.cooperativism.exception.error;
+package br.com.assembleiavota.exception.error;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
