@@ -1,4 +1,4 @@
-package br.com.cooperativism.config;
+package br.com.assembleiavota.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

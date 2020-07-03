@@ -1,6 +1,6 @@
-package br.com.cooperativism.config;
+package br.com.assembleiavota.config;
 
-import br.com.cooperativism.exception.error.ApiError;
+import br.com.assembleiavota.exception.error.ApiError;
 import com.fasterxml.classmate.TypeResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
