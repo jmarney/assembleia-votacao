@@ -1,21 +1,15 @@
 package br.com.assembleiavota;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@EnableScheduling
-@SpringBootApplication
-public class AssembleiaVotacaoApplication extends SpringBootServletInitializer {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class AssembleiaVotacaoApplicationTests {
 
-    public static void main(String[] args) {
-        SpringApplication.run(AssembleiaVotacaoApplication.class, args);
-    }
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(AssembleiaVotacaoApplication.class);
+    @Test
+    public void contextLoads() {
     }
 }
