@@ -12,7 +12,7 @@ public interface SessaoRepository extends JpaRepository<Sessao, Integer> {
 
     Boolean existsSessaoById(Integer id);
 
-    Boolean existsSessaoAtivaByIdAndStatus(Integer id, Boolean ativa);
+    Boolean existsSessaoAtivaByIdAndAtiva(Integer id, Boolean ativa);
 
     @Query("select s from Sessao s where s.ativa=:ativo")
     List<Sessao> buscaSessoesAtivas(Boolean ativo);
