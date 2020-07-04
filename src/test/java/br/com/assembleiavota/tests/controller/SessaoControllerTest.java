@@ -38,7 +38,7 @@ public class SessaoControllerTest {
 
         SessaoAbrirDto sessaoAbrirDto = new SessaoAbrirDto(topico.getId(), null);
 
-        ResponseEntity<SessaoDto> responseEntity = restTemplate.postForEntity(url.concat("/abrir-sessao"), sessaoAbrirDto, SessaoDto.class);
+        ResponseEntity<SessaoDto> responseEntity = restTemplate.postForEntity(url.concat("/criar-sessao"), sessaoAbrirDto, SessaoDto.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntity.getBody().getAtiva()).isTrue();
         assertThat(responseEntity.getBody().getDataHoraInicio().format(dateTimeFormatter)).isEqualTo(LocalDateTime.now().format(dateTimeFormatter));
@@ -53,8 +53,8 @@ public class SessaoControllerTest {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
 
         SessaoAbrirDto sessaoAbrirDto = new SessaoAbrirDto(topico.getId(), 5);
-
-        ResponseEntity<SessaoDto> responseEntity = restTemplate.postForEntity(url.concat("/abrir-sessao"), sessaoAbrirDto, SessaoDto.class);
+        String test = url.concat("/criar-sessao");
+        ResponseEntity<SessaoDto> responseEntity = restTemplate.postForEntity(url.concat("/criar-sessao"), sessaoAbrirDto, SessaoDto.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntity.getBody().getAtiva()).isTrue();
         assertThat(responseEntity.getBody().getDataHoraInicio().format(dateTimeFormatter)).isEqualTo(LocalDateTime.now().format(dateTimeFormatter));
@@ -65,7 +65,7 @@ public class SessaoControllerTest {
     public void cadastraSessaoComTopicoNull_erro() {
         SessaoAbrirDto sessaoAbrirDto = new SessaoAbrirDto(null, null);
 
-        ResponseEntity<SessaoDto> responseEntity = restTemplate.postForEntity(url.concat("/abrir-sessao"), sessaoAbrirDto, SessaoDto.class);
+        ResponseEntity<SessaoDto> responseEntity = restTemplate.postForEntity(url.concat("/criar-sessao"), sessaoAbrirDto, SessaoDto.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
@@ -73,7 +73,7 @@ public class SessaoControllerTest {
     public void cadastraSessaoComTopicoInexistente_erro() {
         SessaoAbrirDto sessaoAbrirDto = new SessaoAbrirDto(8, null);
 
-        ResponseEntity<SessaoDto> responseEntity = restTemplate.postForEntity(url.concat("/abrir-sessao"), sessaoAbrirDto, SessaoDto.class);
+        ResponseEntity<SessaoDto> responseEntity = restTemplate.postForEntity(url.concat("/criar-sessao"), sessaoAbrirDto, SessaoDto.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 }

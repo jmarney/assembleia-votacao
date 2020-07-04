@@ -21,14 +21,14 @@ public class TopicoTest {
     public void validaTopicoTrue() {
         Topico topico = new Topico(null, "Topico testando a descricao");
         this.repository.save(topico);
-        assertThat(this.repository.existsByid(topico.getId()).isPresent()).isTrue();
+        assertThat(this.repository.existsByid(topico.getId())).isTrue();
     }
 
     @Test
     public void validaTopicoFalse() {
         Topico topico = new Topico(null, "Topico testando a descricao");
         this.repository.save(topico);
-        assertThat(this.repository.existsByid(3).isPresent()).isFalse();
+        assertThat(this.repository.existsByid(3)).isFalse();
     }
 
     @Test

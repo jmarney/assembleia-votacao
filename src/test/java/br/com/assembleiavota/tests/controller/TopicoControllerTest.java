@@ -32,12 +32,12 @@ public class TopicoControllerTest {
 
     @Test
     public void consultaTopico_sucesso() {
-        Topico pauta = new Topico(null, "Testando Topico");
-        repository.save(pauta);
+        Topico topico = new Topico(1, "Testando Topico");
+        repository.save(topico);
 
-        ResponseEntity<TopicoDto> responseEntity = restTemplate.getForEntity(url.concat("/{id}"), TopicoDto.class, 1);
+        ResponseEntity<TopicoDto> responseEntity = restTemplate.getForEntity(url.concat("/{idTopico}"), TopicoDto.class, 1);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody().getDescricao()).isEqualTo(pauta.getDescricao());
+        assertThat(responseEntity.getBody().getDescricao()).isEqualTo(topico.getDescricao());
     }
 
     @Test
@@ -48,10 +48,10 @@ public class TopicoControllerTest {
 
     @Test
     public void consultaTopicoInexistent_erro() {
-        Topico topico = new Topico(null, "Teste Pauta 1");
+        Topico topico = new Topico(2, "Teste Pauta 1");
         repository.save(topico);
 
-        ResponseEntity<TopicoDto> responseEntity = restTemplate.getForEntity(url.concat("/{id}"), TopicoDto.class, 2);
+        ResponseEntity<TopicoDto> responseEntity = restTemplate.getForEntity(url.concat("/{idTopico}"), TopicoDto.class, 2);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(responseEntity.getBody().getDescricao()).isNotEqualTo(topico.getDescricao());
     }

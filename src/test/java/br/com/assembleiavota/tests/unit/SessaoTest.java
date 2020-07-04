@@ -44,7 +44,7 @@ public class SessaoTest {
     public void validaSessaoExistenteAtiva_sucesso() {
         Sessao sessao = new Sessao(null, LocalDateTime.now(), LocalDateTime.now().plusMinutes(1), Boolean.TRUE);
         this.repository.save(sessao);
-        assertThat(this.repository.existsSessaoAtivaByIdAndStatus(sessao.getId(), Boolean.TRUE)).isTrue();
+        assertThat(this.repository.existsSessaoAtivaByIdAndAtiva(sessao.getId(), Boolean.TRUE)).isTrue();
     }
 
     @Test
@@ -52,6 +52,6 @@ public class SessaoTest {
         this.repository.deleteAll();
         Sessao sessao = new Sessao(null, LocalDateTime.now(), LocalDateTime.now().plusMinutes(1), Boolean.FALSE);
         this.repository.save(sessao);
-        assertThat(this.repository.existsSessaoAtivaByIdAndStatus(sessao.getId(), Boolean.TRUE)).isFalse();
+        assertThat(this.repository.existsSessaoAtivaByIdAndAtiva(sessao.getId(), Boolean.TRUE)).isFalse();
     }
 }
