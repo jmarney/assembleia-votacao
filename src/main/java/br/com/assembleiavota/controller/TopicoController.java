@@ -1,8 +1,6 @@
 package br.com.assembleiavota.controller;
 
-import br.com.assembleiavota.controller.swagger.TopicoApi;
 import br.com.assembleiavota.dto.TopicoDto;
-import br.com.assembleiavota.model.Topico;
 import br.com.assembleiavota.service.TopicoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,6 +1,5 @@
 package br.com.assembleiavota.controller;
 
-import br.com.assembleiavota.controller.swagger.SessaoApi;
 import br.com.assembleiavota.dto.SessaoAbrirDto;
 import br.com.assembleiavota.dto.SessaoDto;
 import br.com.assembleiavota.service.SessaoService;

@@ -1,6 +1,5 @@
 package br.com.assembleiavota.controller;
 
-import br.com.assembleiavota.controller.swagger.VotoApi;
 import br.com.assembleiavota.dto.VotoDto;
 import br.com.assembleiavota.dto.VotoResultadoDto;
 import br.com.assembleiavota.service.VotoService;
