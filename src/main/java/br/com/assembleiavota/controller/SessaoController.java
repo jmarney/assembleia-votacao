@@ -42,12 +42,12 @@ public class SessaoController implements SessaoApi {
 
     @ApiOperation(value = "Abrir uma sessão de votação, referente a determinada pauta")
     @PostMapping
-    public ResponseEntity<SessaoDto> criarSessao(@Valid @RequestBody SessaoAbrirDto sessaoAbrirDto) {
+    public ResponseEntity<Void> criarSessao(@Valid @RequestBody SessaoAbrirDto sessaoAbrirDto) {
         LOGGER.debug("Abrindo a sessao  id = {}", sessaoAbrirDto.getIdTopico());
         SessaoDto sessaoDto = service.abrirSessao(sessaoAbrirDto);
         LOGGER.debug("Sessao aberta {} aberta", sessaoAbrirDto.getIdTopico());
         LOGGER.debug("Sessao valida de  {} a {}", sessaoDto.getDataHoraInicio(), sessaoDto.getDataHoraFim());
-        return ResponseEntity.status(HttpStatus.CREATED).body(sessaoDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }
