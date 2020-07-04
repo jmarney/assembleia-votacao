@@ -29,7 +29,7 @@ public class MembroService {
     }
 
     @Transactional
-    public void salvarAssociado(MembroDto dto) {
+    public void salvarMembro(MembroDto dto) {
         LOGGER.debug("Registra votacao do membro de cpf = {} na pauta = {}", dto.getCpf(), dto.getIdTopico());
         repository.save(MembroDto.toEntity(dto));
     }
