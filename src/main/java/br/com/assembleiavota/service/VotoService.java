@@ -8,9 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class VotoService {
@@ -26,7 +23,7 @@ public class VotoService {
     @Autowired
     private MembroService membroService;
 
-    @Transactional(readOnly = true)
+
     public boolean isValidaVoto(VotoDto dto) {
         LOGGER.debug("Validando os dados para voto idSessao = {}, idTopico = {}, cpf membro = {}", dto.getIdSessao(), dto.getIdTopico(), dto.getCpf());
 
@@ -54,7 +51,7 @@ public class VotoService {
         return Boolean.TRUE;
     }
 
-    @Transactional
+
     public String votar(VotoDto dto) {
         if (isValidaVoto(dto)) {
             LOGGER.debug("Dados validos para voto idSessao = {}, IdTopico = {}, Cpf membro = {}", dto.getIdSessao(), dto.getIdTopico(), dto.getCpf());
@@ -75,30 +72,30 @@ public class VotoService {
         return null;
     }
 
-    @Transactional
+
     public void registrarMembroVotou(VotoDto dto) {
         MembroDto membroDto = new MembroDto(null, dto.getCpf(), dto.getIdTopico());
         membroService.salvarMembro(membroDto);
     }
 
-    @Transactional
+
     public void registrarVoto(VotacaoDto dto) {
         LOGGER.debug("Computando voto na pauta {}", dto.getIdTopico());
         repository.save(VotacaoDto.toEntity(dto));
     }
 
-    @Transactional(readOnly = true)
+
     public VotacaoDto buscarResultado(Integer idTopico, Integer idSessao) {
         LOGGER.debug("Contabilizando votos para idTopico = {}, idSessao = {}", idTopico, idSessao);
         return new VotacaoDto().builder()
                 .idTopico(idTopico)
                 .idSessao(idSessao)
-                .qtdVotoSim(repository.qtdVotosByIdTopicoAndIdSessaoAndValido(idTopico, idSessao, Boolean.TRUE))
-                .qtdVotoNao(repository.qtdVotosByIdTopicoAndIdSessaoAndValido(idTopico, idSessao, Boolean.FALSE))
+                .qtdVotoSim(repository.countVotosByIdTopicoAndIdSessaoAndVoto(idTopico, idSessao, Boolean.TRUE))
+                .qtdVotoNao(repository.countVotosByIdTopicoAndIdSessaoAndVoto(idTopico, idSessao, Boolean.FALSE))
                 .build();
     }
 
-    @Transactional(readOnly = true)
+
     public VotoResultadoDto buscarResultadoVotacao(Integer idTopico, Integer idSessao) {
 
         if (isValidaDados(idTopico, idSessao) && sessaoService.isSessaoValidaParaContagem(idSessao)) {
@@ -109,8 +106,7 @@ public class VotoService {
         }
         throw new BusinessException("Sessão ainda aberta, não é possível obter o resultado ainda.");
     }
-   
-    @Transactional(readOnly = true)
+
     public boolean isValidaDados(Integer idTopico, Integer idSessao) {
         return sessaoService.isSessaoExiste(idSessao) && topicoService.isValidaPauta(idTopico);
     }

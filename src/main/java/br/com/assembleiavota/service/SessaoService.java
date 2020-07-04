@@ -22,25 +22,27 @@ public class SessaoService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SessaoService.class);
     private static final Integer TEMPO_DEFAULT = 1;
 
+    private final SessaoRepository repository;
+    private final TopicoService topicoService;
+
     @Autowired
-    private SessaoRepository repository;
-    @Autowired
-    private TopicoService topicoService;
+    public SessaoService(SessaoRepository repository, TopicoService topicoService) {
+        this.repository = repository;
+        this.topicoService = topicoService;
+    }
 
 
     @Transactional
     public SessaoDto abrirSessao(SessaoAbrirDto sessaoAbrirDto) {
         LOGGER.debug("Abrindo sessao votacao para a pauta {}", sessaoAbrirDto.getIdTopico());
+       isValidaAbrirSessao(sessaoAbrirDto);
+            SessaoDto dto = new SessaoDto(
+                    null,
+                    LocalDateTime.now(),
+                    calcularTempo(sessaoAbrirDto.getTempo()),
+                    Boolean.TRUE);
 
-        isValidaAbrirSessao(sessaoAbrirDto);
-
-        SessaoDto dto = new SessaoDto(
-                null,
-                LocalDateTime.now(),
-                calcularTempo(sessaoAbrirDto.getTempo()),
-                Boolean.TRUE);
-
-        return salvar(dto);
+            return salvar(dto);
     }
 
     @Transactional(readOnly = true)
@@ -85,7 +87,7 @@ public class SessaoService {
 
     @Transactional(readOnly = true)
     public Boolean isSessaoValida(Integer id) {
-        return repository.existsSessaoAtivaByIdAndStatus(id, Boolean.TRUE);
+        return repository.existsSessaoAtivaByIdAndAtiva(id, Boolean.TRUE);
     }
 
     @Transactional(readOnly = true)
@@ -101,7 +103,7 @@ public class SessaoService {
 
     @Transactional(readOnly = true)
     public Boolean isSessaoValidaParaContagem(Integer id) {
-        return repository.existsSessaoAtivaByIdAndStatus(id, Boolean.FALSE);
+        return repository.existsSessaoAtivaByIdAndAtiva(id, Boolean.FALSE);
     }
 
 

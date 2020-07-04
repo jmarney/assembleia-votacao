@@ -22,12 +22,11 @@ public class TopicoService {
     private TopicoRepository repository;
 
 
-    @Transactional
+
     public TopicoDto salvar(TopicoDto dto) {
         return TopicoDto.toDto(repository.save(TopicoDto.toEntity(dto)));
     }
 
-    @Transactional(readOnly = true)
     public List<TopicoDto> buscarPautas() {
         List<Topico> topicos = repository.findAll();
 
@@ -39,7 +38,7 @@ public class TopicoService {
         return TopicoDto.toDtos(topicos);
     }
 
-    @Transactional(readOnly = true)
+
     public TopicoDto buscarPautaPeloId(Integer id) {
         Optional<Topico> topicoOptional = repository.findById(id);
 
@@ -51,21 +50,8 @@ public class TopicoService {
         return TopicoDto.toDto(topicoOptional.get());
     }
 
-    @Transactional(readOnly = true)
-    public TopicoDto buscarPautaPelaDescricao(String descricao) {
-        Optional<Topico> topicoOptional = repository.findByDescricao(descricao);
-
-        if (!topicoOptional.isPresent()) {
-            LOGGER.error("Pauta não localizada para oid {}", descricao);
-            throw new NotFoundException("Pauta não localizada referente a descricao " + descricao);
-        }
-
-        return TopicoDto.toDto(topicoOptional.get());
-    }
-
-    @Transactional(readOnly = true)
     public Boolean isValidaPauta(Integer id) {
-        if (repository.existsByid(id).isPresent()) {
+        if (repository.existsByid(id)) {
             return Boolean.TRUE;
         } else {
             LOGGER.error("Pauta não localizada para id {}", id);
