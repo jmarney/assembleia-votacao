@@ -3,14 +3,12 @@ package br.com.assembleiavota.controller.swagger;
 import br.com.assembleiavota.dto.SessaoAbrirDto;
 import br.com.assembleiavota.dto.SessaoDto;
 import br.com.assembleiavota.response.SessaoResponse;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+@Api(value = "Sessões", tags = "sessoes")
 public interface SessaoApi {
 
    @ApiOperation(value = "Listar Sessões em andamento",

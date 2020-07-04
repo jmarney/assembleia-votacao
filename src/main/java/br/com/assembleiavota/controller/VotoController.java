@@ -4,25 +4,30 @@ import br.com.assembleiavota.controller.swagger.VotoApi;
 import br.com.assembleiavota.dto.VotoDto;
 import br.com.assembleiavota.dto.VotoResultadoDto;
 import br.com.assembleiavota.service.VotoService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-public class VotoController implements VotoApi {
+@RestController
+@RequestMapping(value = "/api/v1/votos")
+@Api(value = "Votos", tags = "votos")
+public class VotoController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VotoController.class);
 
+    private final VotoService service;
+
     @Autowired
-    private VotoService service;
+    public VotoController(VotoService service) {
+        this.service = service;
+    }
 
     @ApiOperation(value = "Votar uma pauta, caso esteja em andamento")
     @PostMapping(value = "/votar")
@@ -35,7 +40,7 @@ public class VotoController implements VotoApi {
 
     @ApiOperation(value = "Busca resultado da votacao")
     @GetMapping(value = "/resultado/{idTopico}/{idSessao}")
-    public ResponseEntity<VotoResultadoDto> resultado(@PathVariable Integer idTopico, @PathVariable Integer idSessao) {
+    public ResponseEntity<VotoResultadoDto> buscarResultadoVotacao(@PathVariable Integer idTopico, @PathVariable Integer idSessao) {
         LOGGER.debug("Buscando resultado da votacao idTopico = {} , idSessao = {} ", idTopico, idSessao);
         VotoResultadoDto votoResultadoDto = service.buscarResultadoVotacao(idTopico, idSessao);
         return ResponseEntity.status(HttpStatus.OK).body(votoResultadoDto);
