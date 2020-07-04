@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface TopicoRepository extends JpaRepository<Topico, Integer> {
 
     Optional<Boolean> existsByid(Integer id);
+
+    Optional<Topico> findByDescricao(String descricao);
 }

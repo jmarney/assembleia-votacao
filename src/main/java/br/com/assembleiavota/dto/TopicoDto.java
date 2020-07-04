@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @ApiModel(value = "PautaDTO")
 @Data
@@ -31,10 +33,16 @@ public class TopicoDto {
                 .build();
     }
 
-    public static TopicoDto toDTO(Topico topico) {
+    public static TopicoDto toDto(Topico topico) {
         return TopicoDto.builder()
                 .id(topico.getId())
                 .descricao(topico.getDescricao())
                 .build();
+    }
+
+    public static List<TopicoDto> toDtos(List<Topico> topicos) {
+        List<TopicoDto> listTopicoDto = new ArrayList<>();
+        topicos.forEach(topico ->listTopicoDto.add(toDto(topico)));
+        return listTopicoDto;
     }
 }

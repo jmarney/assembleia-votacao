@@ -6,6 +6,8 @@ import br.com.assembleiavota.response.TopicoResponse;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 @Api(value = "Pautas", tags = "Info das Pautas da Assembleia")
 public interface TopicoApi {
 
@@ -15,7 +17,7 @@ public interface TopicoApi {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Requisição sucesso.",
                     response = TopicoResponse.class)})
-    ResponseEntity<TopicoResponse> findAll();
+    ResponseEntity<List<TopicoDto>> buscarPautas();
 
     @ApiOperation(value = "Cria Pauta",
             notes = "Criar uma pauta",
@@ -23,22 +25,22 @@ public interface TopicoApi {
     @ApiResponses({
             @ApiResponse(code = 201, message = "Requisição sucesso.",
                     response = Void.class)})
-    ResponseEntity<Void> create(@ApiParam(name = "Request", required = true) TopicoRequest topicRequest);
+    ResponseEntity<Void> criarPauta(@ApiParam(name = "Request", required = true) TopicoDto topicoDto);
 
-    @ApiOperation(value = "Busca Pauta especifica por id",
-            notes = "Busca pauta pelo id Pauta",
+    @ApiOperation(value = "Busca Pauta por id",
+            notes = "Busca pauta pelo id Topico",
             consumes = "application/json", produces = "application/json")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Requisição sucesso.",
                     response = TopicoDto.class)})
-    ResponseEntity<TopicoDto> findById(@ApiParam(name = "Id Pauta", example = "1", required = true) Long topicoId);
+    ResponseEntity<TopicoDto> buscaPautaById(@ApiParam(name = "Id Topico", example = "1", required = true) Integer idTopico);
 
 
-    @ApiOperation(value = "Busca Pauta especifica por nome",
-            notes = "Busca pauta pelo nome",
+    @ApiOperation(value = "Busca Pauta especifica por descricao",
+            notes = "Busca pauta pela descricao",
             consumes = "application/json", produces = "application/json")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Requisição realizada com sucesso.",
                     response = TopicoDto.class)})
-    ResponseEntity<TopicoDto> findByName(@ApiParam(name = "Request", example = "Pauta 1", required = true) String topicoName);
+    ResponseEntity<TopicoDto> buscaPautaByName(@ApiParam(name = "Request", example = "Pauta 1", required = true) String descricao);
 }

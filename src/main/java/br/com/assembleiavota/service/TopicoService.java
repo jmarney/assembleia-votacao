@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,7 +24,19 @@ public class TopicoService {
 
     @Transactional
     public TopicoDto salvar(TopicoDto dto) {
-        return TopicoDto.toDTO(repository.save(TopicoDto.toEntity(dto)));
+        return TopicoDto.toDto(repository.save(TopicoDto.toEntity(dto)));
+    }
+
+    @Transactional(readOnly = true)
+    public List<TopicoDto> buscarPautas() {
+        List<Topico> topicos = repository.findAll();
+
+        if (topicos.isEmpty()) {
+            LOGGER.error("Pautas não localizadas");
+            throw new NotFoundException("Pautas não localizadas");
+        }
+
+        return TopicoDto.toDtos(topicos);
     }
 
     @Transactional(readOnly = true)
@@ -35,7 +48,19 @@ public class TopicoService {
             throw new NotFoundException("Pauta não localizada referente a id " + id);
         }
 
-        return TopicoDto.toDTO(topicoOptional.get());
+        return TopicoDto.toDto(topicoOptional.get());
+    }
+
+    @Transactional(readOnly = true)
+    public TopicoDto buscarPautaPelaDescricao(String descricao) {
+        Optional<Topico> topicoOptional = repository.findByDescricao(descricao);
+
+        if (!topicoOptional.isPresent()) {
+            LOGGER.error("Pauta não localizada para oid {}", descricao);
+            throw new NotFoundException("Pauta não localizada referente a descricao " + descricao);
+        }
+
+        return TopicoDto.toDto(topicoOptional.get());
     }
 
     @Transactional(readOnly = true)
