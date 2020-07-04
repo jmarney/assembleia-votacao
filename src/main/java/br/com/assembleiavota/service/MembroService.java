@@ -1,6 +1,6 @@
 package br.com.assembleiavota.service;
 
-import br.com.assembleiavota.cliente.MembroClient;
+import br.com.assembleiavota.cliente.ValidaClient;
 import br.com.assembleiavota.dto.MembroDto;
 import br.com.assembleiavota.repository.MembroRepository;
 import org.slf4j.Logger;
@@ -14,12 +14,12 @@ public class MembroService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MembroService.class);
     private final MembroRepository repository;
-    private MembroClient validaMembroCpf;
+    private ValidaClient validaClient;
 
     @Autowired
-    public MembroService(MembroRepository repository, MembroClient validaMembroCpf) {
+    public MembroService(MembroRepository repository, ValidaClient validaMembroCpf) {
         this.repository = repository;
-        this.validaMembroCpf = validaMembroCpf;
+        this.validaClient = validaMembroCpf;
     }
 
     @Transactional(readOnly = true)
@@ -35,6 +35,6 @@ public class MembroService {
     }
 
     public boolean isValidoMembroVotar(String cpf) {
-        return validaMembroCpf.validaAssociadoVotacao(cpf);
+        return validaClient.validaClient(cpf);
     }
 }
