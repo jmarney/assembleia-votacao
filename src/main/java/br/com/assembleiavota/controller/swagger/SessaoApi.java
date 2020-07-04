@@ -2,7 +2,6 @@ package br.com.assembleiavota.controller.swagger;
 
 import br.com.assembleiavota.dto.SessaoAbrirDto;
 import br.com.assembleiavota.dto.SessaoDto;
-import br.com.assembleiavota.request.SessaoRequest;
 import br.com.assembleiavota.response.SessaoResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

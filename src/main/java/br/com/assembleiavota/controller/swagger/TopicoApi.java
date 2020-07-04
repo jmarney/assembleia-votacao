@@ -1,7 +1,6 @@
 package br.com.assembleiavota.controller.swagger;
 
 import br.com.assembleiavota.dto.TopicoDto;
-import br.com.assembleiavota.request.TopicoRequest;
 import br.com.assembleiavota.response.TopicoResponse;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
