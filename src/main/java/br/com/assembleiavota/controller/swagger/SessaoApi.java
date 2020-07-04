@@ -36,7 +36,7 @@ public interface SessaoApi {
     @ApiResponses({
             @ApiResponse(code = 201, message = "Requisição sucesso.",
                     response = Void.class)})
-    ResponseEntity<SessaoDto> criarSessao(@ApiParam(name = "Request", required = true) SessaoAbrirDto sessaoAbrirDto);
+    ResponseEntity<Void> criarSessao(@ApiParam(name = "Request", required = true) SessaoAbrirDto sessaoAbrirDto);
 
 
 }
