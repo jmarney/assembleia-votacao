@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class VotoService {
 
@@ -36,7 +38,7 @@ public class VotoService {
         } else if (!sessaoService.isSessaoValida(dto.getIdSessao())) {
 
             LOGGER.error("Tentativa de voto para sessao encerrada idSessao {}", dto.getIdSessao());
-            throw new NotFoundException("Sessão já encerrada");
+            throw new BusinessException("Sessão já encerrada");
 
         } else if (!membroService.isValidoMembroVotar(dto.getCpf())) {
 
@@ -55,7 +57,7 @@ public class VotoService {
     @Transactional
     public String votar(VotoDto dto) {
         if (isValidaVoto(dto)) {
-            LOGGER.debug("Dados validos para voto idSessao = {}, idPauta = {}, Cpf membro = {}", dto.getIdSessao(), dto.getIdTopico(), dto.getCpf());
+            LOGGER.debug("Dados validos para voto idSessao = {}, IdTopico = {}, Cpf membro = {}", dto.getIdSessao(), dto.getIdTopico(), dto.getCpf());
 
             VotacaoDto votacaoDto = new VotacaoDto(null,
                     dto.getIdTopico(),
@@ -66,7 +68,7 @@ public class VotoService {
 
             registrarVoto(votacaoDto);
 
-            registrarAssociadoVotou(dto);
+            registrarMembroVotou(dto);
 
             return "Voto validado";
         }
@@ -74,41 +76,38 @@ public class VotoService {
     }
 
     @Transactional
-    public void registrarAssociadoVotou(VotoDto dto) {
+    public void registrarMembroVotou(VotoDto dto) {
         MembroDto membroDto = new MembroDto(null, dto.getCpf(), dto.getIdTopico());
-        membroService.salvarAssociado(membroDto);
+        membroService.salvarMembro(membroDto);
     }
 
     @Transactional
     public void registrarVoto(VotacaoDto dto) {
-        LOGGER.debug("Salvando o voto para pauta {}", dto.getIdTopico());
+        LOGGER.debug("Computando voto na pauta {}", dto.getIdTopico());
         repository.save(VotacaoDto.toEntity(dto));
     }
 
     @Transactional(readOnly = true)
     public VotacaoDto buscarResultado(Integer idTopico, Integer idSessao) {
-        LOGGER.debug("Contabilizando os votos para idTopico = {}, idSessao = {}", idTopico, idSessao);
-        VotacaoDto dto = new VotacaoDto();
-
-        dto.setIdTopico(idTopico);
-        dto.setIdSessao(idSessao);
-
-        dto.setQtdVotoSim(repository.qtdVotosByIdTopicoAndIdSessaoAndValido(idTopico, idSessao, Boolean.TRUE));
-        dto.setQtdVotoNao(repository.qtdVotosByIdTopicoAndIdSessaoAndValido(idTopico, idSessao, Boolean.FALSE));
-
-        return dto;
+        LOGGER.debug("Contabilizando votos para idTopico = {}, idSessao = {}", idTopico, idSessao);
+        return new VotacaoDto().builder()
+                .idTopico(idTopico)
+                .idSessao(idSessao)
+                .qtdVotoSim(repository.qtdVotosByIdTopicoAndIdSessaoAndValido(idTopico, idSessao, Boolean.TRUE))
+                .qtdVotoNao(repository.qtdVotosByIdTopicoAndIdSessaoAndValido(idTopico, idSessao, Boolean.FALSE))
+                .build();
     }
 
     @Transactional(readOnly = true)
-    public VotoResultadoDto buscarDadosResultadoVotacao(Integer idTopico, Integer oidSessaoVotacao) {
+    public VotoResultadoDto buscarResultadoVotacao(Integer idTopico, Integer idSessao) {
 
-        if (isValidaDados(idTopico, oidSessaoVotacao) && sessaoService.isSessaoValidaParaContagem(oidSessaoVotacao)) {
-            LOGGER.debug("Construindo o objeto de retorno do resultado para idTopico = {}, oidSessaoVotacao = {}", idTopico, oidSessaoVotacao);
+        if (isValidaDados(idTopico, idSessao) && sessaoService.isSessaoValidaParaContagem(idSessao)) {
+            LOGGER.debug("Construindo o objeto de retorno do resultado para idTopico = {}, idSessao = {}", idTopico, idSessao);
             TopicoDto topicoDto = topicoService.buscarPautaPeloId(idTopico);
-            VotacaoDto votacaoDTO = buscarResultado(idTopico, oidSessaoVotacao);
+            VotacaoDto votacaoDTO = buscarResultado(idTopico, idSessao);
             return new VotoResultadoDto(topicoDto, votacaoDTO);
         }
-        throw new NotFoundException("Sessão de votação ainda está aberta, não é possível obter a contagem do resultado.");
+        throw new BusinessException("Sessão ainda aberta, não é possível obter o resultado ainda.");
     }
    
     @Transactional(readOnly = true)
