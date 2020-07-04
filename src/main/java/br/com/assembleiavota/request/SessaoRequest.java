@@ -18,14 +18,14 @@ public class SessaoRequest {
     @ApiModelProperty(value = "Id da Pauta", example = "1")
     @NotNull(message = "O campo 'idPauta' não pode ser nulo")
     @JsonProperty("idPauta")
-    private Long topicoId;
+    private Long idTopico;
 
     public SessaoRequest() {
     }
 
-    public SessaoRequest(final Integer duracao, final Long topicoId) {
+    public SessaoRequest(final Integer duracao, final Long idTopico) {
         this.duracao = duracao;
-        this.topicoId = topicoId;
+        this.idTopico = idTopico;
     }
 
     public Integer getDuration() {
@@ -36,19 +36,19 @@ public class SessaoRequest {
         this.duracao = duracao;
     }
 
-    public Long getTopicoId() {
-        return topicoId;
+    public Long getIdTopico() {
+        return idTopico;
     }
 
-    public void setTopicoId(Long topicoId) {
-        this.topicoId = topicoId;
+    public void setIdTopico(Long idTopico) {
+        this.idTopico = idTopico;
     }
 
     @Override
     public String toString() {
         return "{\"SessaoRequest\":{"
                 + "\"duracao\":\"" + duracao + "\""
-                + ", \"topicId\":\"" + topicoId + "\""
+                + ", \"idTopico\":\"" + idTopico + "\""
                 + "}}";
     }
 }

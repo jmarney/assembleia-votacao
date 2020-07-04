@@ -1,6 +1,7 @@
 package br.com.assembleiavota.dto;
 
 import br.com.assembleiavota.model.Sessao;
+import br.com.assembleiavota.request.SessaoRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -39,7 +40,7 @@ public class SessaoDto {
                 .build();
     }
 
-    public static SessaoDto toDTO(Sessao sessao) {
+    public static SessaoDto toDto(Sessao sessao) {
         return SessaoDto.builder()
                 .id(sessao.getId())
                 .dataHoraInicio(sessao.getDataHoraInicio())

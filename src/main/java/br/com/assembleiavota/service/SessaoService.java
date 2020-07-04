@@ -27,6 +27,7 @@ public class SessaoService {
     @Autowired
     private TopicoService topicoService;
 
+
     @Transactional
     public SessaoDto abrirSessao(SessaoAbrirDto sessaoAbrirDto) {
         LOGGER.debug("Abrindo sessao votacao para a pauta {}", sessaoAbrirDto.getIdTopico());
@@ -56,7 +57,7 @@ public class SessaoService {
         LOGGER.debug("Buscando sessoes em andamento");
         List<SessaoDto> list = repository.buscaSessoesAtivas(Boolean.TRUE)
                 .stream()
-                .map(SessaoDto::toDTO)
+                .map(SessaoDto::toDto)
                 .collect(Collectors.toList());
 
         return list
@@ -79,7 +80,7 @@ public class SessaoService {
             LOGGER.error("Sessao de votacao nao localizada para o id {}", id);
             throw new NotFoundException("Sessão de votação não localizada para o id " + id);
         }
-        return SessaoDto.toDTO(optionalSessao.get());
+        return SessaoDto.toDto(optionalSessao.get());
     }
 
     @Transactional(readOnly = true)
@@ -116,7 +117,7 @@ public class SessaoService {
     public SessaoDto salvar(SessaoDto dto) {
         LOGGER.debug("Salvando a sessao");
         if (Optional.ofNullable(dto).isPresent()) {
-            return SessaoDto.toDTO(repository.save(SessaoDto.toEntity(dto)));
+            return SessaoDto.toDto(repository.save(SessaoDto.toEntity(dto)));
         }
         return null;
     }
