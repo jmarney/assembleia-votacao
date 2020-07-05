@@ -42,5 +42,5 @@ http://localhost:8080/swagger-ui.html#/
 ```
 Produção:
 ```
-https://assembleiavota.herokuapp.com/swagger-ui.html/#/
+https://assembleiavota.herokuapp.com/swagger-ui.html#/
 ```
