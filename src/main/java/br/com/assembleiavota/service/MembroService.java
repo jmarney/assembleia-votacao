@@ -17,7 +17,7 @@ public class MembroService {
     @Autowired
     private ValidaClient validaClient;
 
-    public Boolean isValidaParticipacaoAssociadoVotacao(String cpf, Integer idTopico) {
+    public Boolean existsByCpfAndIdTopico(String cpf, Integer idTopico) {
         LOGGER.debug("Valida o associado de cpf = {} na pauta  = {}", cpf, idTopico);
         return repository.existsByCpfAndIdTopico(cpf, idTopico);
     }

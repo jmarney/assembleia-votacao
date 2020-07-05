@@ -21,12 +21,8 @@ public class TopicoController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TopicoController.class);
 
-    private final TopicoService service;
-
     @Autowired
-    public TopicoController(TopicoService service) {
-        this.service = service;
-    }
+    private TopicoService service;
 
     @ApiOperation(value = "Criar uma pauta para ser votada")
     @PostMapping

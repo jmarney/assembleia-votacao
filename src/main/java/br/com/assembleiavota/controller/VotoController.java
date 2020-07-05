@@ -21,12 +21,8 @@ public class VotoController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VotoController.class);
 
-    private final VotoService service;
-
     @Autowired
-    public VotoController(VotoService service) {
-        this.service = service;
-    }
+    private VotoService service;
 
     @ApiOperation(value = "Votar uma pauta, caso esteja em andamento")
     @PostMapping(value = "/votar")

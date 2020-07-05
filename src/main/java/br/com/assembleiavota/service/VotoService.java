@@ -42,9 +42,9 @@ public class VotoService {
             LOGGER.error("Associado nao esta habilitado para votar {}", dto.getCpf());
             throw new BusinessException("Membro não esta hablitado para votar nesta pauta");
 
-        } else if (!membroService.isValidaParticipacaoAssociadoVotacao(dto.getCpf(), dto.getIdTopico())) {
+        } else if (membroService.existsByCpfAndIdTopico(dto.getCpf(), dto.getIdTopico())) {
 
-            LOGGER.error("Associado tentou votar mais de 1 vez oidAssociado {}", dto.getCpf());
+            LOGGER.error("Associado tentou votar mais de 1 vez cpf {}", dto.getCpf());
             throw new BusinessException("Membro ja votou nessa pauta");
         }
 

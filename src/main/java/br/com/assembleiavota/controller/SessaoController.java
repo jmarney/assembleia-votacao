@@ -22,12 +22,8 @@ public class SessaoController  {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SessaoController.class);
 
-    private final SessaoService service;
-
     @Autowired
-    public SessaoController(SessaoService service) {
-        this.service = service;
-    }
+    private SessaoService service;
 
     @ApiOperation(value = "Abrir uma sessão de votação, referente a determinada pauta")
     @PostMapping(value = "/criar-sessao")
