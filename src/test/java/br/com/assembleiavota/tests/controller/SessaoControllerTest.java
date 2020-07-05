@@ -69,11 +69,4 @@ public class SessaoControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
-    @Test
-    public void cadastraSessaoComTopicoInexistente_erro() {
-        SessaoAbrirDto sessaoAbrirDto = new SessaoAbrirDto(8, null);
-
-        ResponseEntity<SessaoDto> responseEntity = restTemplate.postForEntity(url.concat("/criar-sessao"), sessaoAbrirDto, SessaoDto.class);
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    }
 }

@@ -52,7 +52,6 @@ public class TopicoControllerTest {
         repository.save(topico);
 
         ResponseEntity<TopicoDto> responseEntity = restTemplate.getForEntity(url.concat("/{idTopico}"), TopicoDto.class, 2);
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(responseEntity.getBody().getDescricao()).isNotEqualTo(topico.getDescricao());
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
