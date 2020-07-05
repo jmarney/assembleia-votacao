@@ -19,7 +19,7 @@ public class TemporizadorComponent {
     @Autowired
     private SessaoService sessaoService;
 
-    @Scheduled(cron = "20 * * * * *", zone = TIME_ZONE)
+    @Scheduled(cron = "5 * * * * *", zone = TIME_ZONE)
     private void duracao() {
         LOGGER.debug("Iniciando contagem...");
         List<SessaoDto> listSessoes = sessaoService.buscarSessoesEmAndamento();
